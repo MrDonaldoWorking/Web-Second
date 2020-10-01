@@ -8,6 +8,7 @@ body {
 
 header .header {
   display: flex;
+  position: relative;
 }
 
 h1, h2, h3 {
@@ -173,9 +174,30 @@ main .header .add-new-city input {
 }
 
 @media screen and (max-width: 860px) {
+  body {
+    padding: 0 5%;
+  }
+
+  .tight-width {
+    left: 0;
+    margin-left: 90%;
+  }
+
+  main .header .add-new-city {
+    max-width: 100%;
+  }
+
+  main .header .add-new-city input {
+    max-width: 90%;
+  }
+
+  .details {
+    max-width: 100%;
+  }
+
   header .body, .cities, main .header {
-    grid-template-columns: 430px;
-    max-width: 430px;
+    grid-template-columns: 100%;
+    max-width: 100%;
     flex-wrap: wrap;
   }
 
