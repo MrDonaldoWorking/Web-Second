@@ -10,20 +10,25 @@
 <header>
     <div class="header">
         <h1>Погода здесь</h1>
-        <button class="wide-width">Обновить геолокацию</button>
-        <button class="tight-width">⟳</button>
+        <button id="wide-btn" class="wide-width" onclick="rqst_geo()">Обновить геолокацию</button>
+        <button id="tight-btn" class="tight-width" onclick="rqst_geo()">⟳</button>
     </div>
 
     <div class="body">
-        <div class="brief">
+        <div id="header-loading" class="loading">
+            <div class="message">Подождите, данные загружаются</div>
+            <div class="mark">⟳</div>
+        </div>
+
+        <div id="header-brief" class="brief">
             <h2>Saint Petersburg</h2>
             <div class="data">
-                <img src="" alt="Иконка погоды">
+                <img id="header-icon" src="" alt="Иконка погоды">
                 <div class="temperature">9°C</div>
             </div>
         </div>
 
-        <ul class="details">
+        <ul id="header-details" class="details">
             <li>
                 <div class='title'>Ветер</div>
                 <div class='value'>Moderate breeze, 6.0 m/s, North-northwest</div>
@@ -57,7 +62,7 @@
         </div>
     </div>
 
-    <ul class="cities">
+    <template class="cities">
         <li>
             <div class="brief">
                 <div class="information">
@@ -91,7 +96,7 @@
                 </li>
             </ul>
         </li>
-    </ul>
+    </template>
 </main>
 </body>
 </html>
