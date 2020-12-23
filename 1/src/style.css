@@ -58,13 +58,14 @@ header .body, .cities {
   width: 100%;
 }
 
-header .body .brief div {
-  display: inline-flex;
-}
-
 img {
   border: solid 3px #b8c1c3;
   align-items: center;
+}
+
+header .body .brief .data {
+  display: flex;
+  justify-content: space-between;
 }
 
 header .body .brief img {
@@ -79,8 +80,8 @@ header .body .brief img {
 
 header .body .brief .temperature {
   font-size: 120px;
-  position: absolute;
-  margin-left: 30px;
+  /*position: absolute;*/
+  /*margin-left: 30px;*/
 }
 
 ul {
