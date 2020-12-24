@@ -63,7 +63,7 @@ img {
   align-items: center;
 }
 
-header .body .loading {
+.loading {
   display: none;
 }
 

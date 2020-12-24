@@ -56,13 +56,15 @@
 <main>
     <div class="header">
         <h2>Избранное</h2>
-        <div class="add-new-city">
+        <form id="form" class="add-new-city">
             <input placeholder="Добавить новый город">
             <button class="add">+</button>
-        </div>
+        </form>
     </div>
 
-    <template class="cities">
+    <ul class="cities"></ul>
+
+    <template>
         <li>
             <div class="brief">
                 <div class="information">
@@ -70,7 +72,12 @@
                     <img src="" alt="Иконка погоды">
                     <div class="temperature">8°C</div>
                 </div>
-                <button class="close">+</button>
+                <button class="close" onclick="remove_li(this)">+</button>
+            </div>
+
+            <div class="loading">
+                <div class="message">Подождите, данные загружаются</div>
+                <div class="mark">⟳</div>
             </div>
 
             <ul class="details">
