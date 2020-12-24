@@ -4,7 +4,7 @@ const APIkey = "5b8da300caa2c2c6eac11464f623fe57";
 const url_pref = "https://api.openweathermap.org/data/2.5/weather?";
 const city = "Ouagadougou";
 
-const success = pos => {
+async function success(pos) {
     let crd = pos.coords;
 
     console.log('Your current position is:');
@@ -13,19 +13,19 @@ const success = pos => {
     console.log(`More or less ${crd.accuracy} meters.`);
 
     const url = url_pref + "lat=" + crd.latitude + "&lon=" + crd.longitude + "&APIKEY=" + APIkey
-    set_header_info(url)
+    await set_header_info(url)
 }
 
-const error = err => {
+async function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 
     const url = url_pref + "q=" + city + "&APIKEY=" + APIkey
-    set_header_info(url)
+    await set_header_info(url)
 }
 
-const rqst_geo = () => {
+async function rqst_geo() {
     navigator.geolocation.getCurrentPosition(success, error);
-    update_local_storage();
+    await update_cities_from_local_storage();
 }
 
 function show_err_msg(...args) {
@@ -102,8 +102,29 @@ async function set_header_info(url) {
     brief.style.display = details.style.display = "";
 }
 
-const update_local_storage = () => {
+async function update_cities_from_local_storage() {
+    const cities_li = Array.from(document.getElementsByClassName("cities")[0].children);
+    const screen_cities = [];
+    cities_li.forEach(li => screen_cities.push(li.querySelector(".information h3").innerHTML));
 
+    let cities = [];
+    if (localStorage.getItem("cities") !== null) {
+        cities = localStorage.getItem("cities").split(',');
+    }
+    console.log("cities = " + cities);
+
+    for (const city of cities) {
+        if (!screen_cities.includes(city)) {
+            const rnd = Math.random().toString();
+            const code = await add_new_li(city, rnd);
+            if (code === 1) {
+                console.warn("for city " + city + " code is " + code);
+                document.getElementById(rnd).remove();
+            }
+        }
+    }
+    cities = cities.concat(screen_cities);
+    localStorage.setItem("cities", cities.toString());
 }
 
 async function add_new_li(city, rnd) {
@@ -125,9 +146,6 @@ async function add_new_li(city, rnd) {
     if ((data.cod - data.cod % 100) / 100 !== 2) {
         return 1;
     }
-    if (cities.indexOf(city) !== -1) {
-        return 2;
-    }
 
     const city_li = document.getElementById(rnd);
     const brief_info = city_li.querySelector(".information");
@@ -146,6 +164,11 @@ async function add_new_li(city, rnd) {
     return 0;
 }
 
+const reformat_str = str => {
+    str = str.toLowerCase();
+    return str[0].toUpperCase() + str.slice(1);
+}
+
 async function add_new_city(event) {
     const rnd = Math.random().toString();
 
@@ -154,21 +177,27 @@ async function add_new_city(event) {
     console.log(event.target.children[0].innerHTML);
     console.log(event.target.children[0].textContent);
 
-    const city = event.target.children[0].value;
+    const city = reformat_str(event.target.children[0].value);
+
+    let cities = [];
+    if (localStorage.getItem("cities") !== null) {
+        cities = localStorage.getItem("cities").split(',');
+    }
+    if (cities.includes(city)) {
+        alert("Город '" + city + "' уже находится в списке");
+        return
+    }
+
     const code = await add_new_li(city, rnd);
     if (code === 0) {
-        let cities = [];
-        if (localStorage.getItem("cities") !== null) {
-            cities = localStorage.getItem("cities").split(',');
-        }
         cities.push(city);
         localStorage.setItem("cities", cities.toString());
     } else {
-        if (code === 2) {
-             alert("Город '" + city + "' уже находится в списке");
-        } else {
+        // if (code === 2) {
+        //      alert("Город '" + city + "' уже находится в списке");
+        // } else {
              alert("Не удаётся найти город '" + city + "'");
-        }
+        // }
 
         document.getElementById(rnd).remove();
     }
@@ -188,8 +217,8 @@ const remove_li = object => {
     localStorage.setItem("cities", cities.toString())
 }
 
-window.onload = () => {
-    rqst_geo()
+async function start() {
+    await rqst_geo();
     document.getElementById("form").addEventListener("submit", async event => {
         event.preventDefault();
         console.log("event started");
@@ -198,3 +227,5 @@ window.onload = () => {
         event.target.children[0].value = "";
     });
 }
+
+window.onload = start;
