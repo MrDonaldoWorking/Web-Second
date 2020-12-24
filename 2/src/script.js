@@ -114,7 +114,7 @@ async function update_cities_from_local_storage() {
     console.log("cities = " + cities);
 
     for (const city of cities) {
-        if (!screen_cities.includes(city)) {
+        if (city !== "" && !screen_cities.includes(city)) {
             const rnd = Math.random().toString();
             const code = await add_new_li(city, rnd);
             if (code === 1) {
