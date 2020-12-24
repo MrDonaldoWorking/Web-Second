@@ -65,6 +65,19 @@ img {
 
 .loading {
   display: none;
+  font-family: "Courier New", "Comic Sans MS", Arial, serif;
+  border: dashed 2px #cccccc;
+  border-radius: 2px;
+  text-align: center;
+  margin: auto;
+}
+
+header .body .loading {
+  font-size: 35px;
+}
+
+main .cities .loading {
+  font-size: 25px;
 }
 
 header .body .brief .data {

@@ -77,7 +77,7 @@ async function set_header_info(url) {
     const brief = document.getElementById("header-brief");
     const details = document.getElementById("header-details");
 
-    loading.style.display = "flex";
+    loading.style.display = "block";
     brief.style.display = details.style.display = "none";
 
     url = url + "&units=metric";
@@ -124,6 +124,7 @@ async function update_cities_from_local_storage() {
         }
     }
     cities = cities.concat(screen_cities);
+    cities = cities.filter((city, pos) => cities.indexOf(city) === pos)
     localStorage.setItem("cities", cities.toString());
 }
 
@@ -134,7 +135,7 @@ async function add_new_li(city, rnd) {
     const clone_info = clone.querySelector(".information");
     clone_info.children[0].innerHTML = city;
     clone_info.children[2].innerHTML = "???°C";
-    clone.querySelector(".loading").style.display = "flex";
+    clone.querySelector(".loading").style.display = "block";
     clone.querySelector(".details").style.display = "none";
 
     const ul = document.getElementsByClassName("cities")[0];
