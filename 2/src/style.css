@@ -70,6 +70,12 @@ img {
   border-radius: 2px;
   text-align: center;
   margin: auto;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding: 10px;
 }
 
 header .body .loading {
@@ -229,5 +235,9 @@ main .header .add-new-city input {
 
   .tight-width {
     display: flex;
+  }
+
+  .loading {
+    grid-column-end: 2;
   }
 }

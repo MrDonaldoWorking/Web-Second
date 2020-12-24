@@ -77,7 +77,7 @@ async function set_header_info(url) {
     const brief = document.getElementById("header-brief");
     const details = document.getElementById("header-details");
 
-    loading.style.display = "block";
+    loading.style.display = "grid";
     brief.style.display = details.style.display = "none";
 
     url = url + "&units=metric";
@@ -135,7 +135,7 @@ async function add_new_li(city, rnd) {
     const clone_info = clone.querySelector(".information");
     clone_info.children[0].innerHTML = city;
     clone_info.children[2].innerHTML = "???°C";
-    clone.querySelector(".loading").style.display = "block";
+    clone.querySelector(".loading").style.display = "grid";
     clone.querySelector(".details").style.display = "none";
 
     const ul = document.getElementsByClassName("cities")[0];
